@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 function LoginPage() {
+  const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
+
+  const changeHandler = (e) => {
+    const { id, value } = e.target;
+    setLoginInfo({ ...loginInfo, [id]: value });
+  };
+
   return (
     <Form>
-      <Input placeholder="Type your id" />
-      <Input type="password" placeholder="Type your password" />
+      <Input
+        id="email"
+        placeholder="Type your email"
+        onChange={changeHandler}
+      />
+      <Input
+        type="password"
+        id="password"
+        placeholder="Type your password"
+        onChange={changeHandler}
+      />
       <Button disabled>Login</Button>
     </Form>
   );
