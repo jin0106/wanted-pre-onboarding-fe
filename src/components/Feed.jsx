@@ -2,6 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBookmark,
+  faComment,
+  faHeart,
+  faMessage,
+  faSmile,
+} from '@fortawesome/free-regular-svg-icons';
+import Comment from './Comment';
 
 function Feed() {
   return (
@@ -11,10 +19,34 @@ function Feed() {
           <ProfileImg />
           <NickName>dlawlrma</NickName>
         </UserInfo>
-        <MoreOptions icon={faEllipsis} />
+        <Icon icon={faEllipsis} />
       </Header>
-      <div>사진, 좋아요 버튼</div>
-      <div>좋아요 갯수, 컨텐츠, 작성시간, 댓글작성</div>
+      <PhotoSection>
+        <Photo src="https://source.unsplash.com/random/600x500" />
+        <IconContainer>
+          <BookMark>
+            <Icon icon={faHeart} margin="true" />
+            <Icon icon={faComment} margin="true" />
+            <Icon icon={faMessage} margin="true" />
+          </BookMark>
+          <Icon icon={faBookmark} />
+        </IconContainer>
+      </PhotoSection>
+      <ArticleInfo>
+        <Likes>10000 likes</Likes>
+        <ContentsContainer>
+          <NickName>dlawlrma</NickName>
+          <Contents>asdfadfafasdfasasdfadsf</Contents>
+        </ContentsContainer>
+      </ArticleInfo>
+      {[{ writer: 'wjin', comment: 'dafsdf' }].map((value, index) => (
+        <Comment props={value} key={index} />
+      ))}
+      <CreateComment>
+        <Icon icon={faSmile} margin="true" />
+        <CommentInput />
+        <PostBtn>Post</PostBtn>
+      </CreateComment>
     </Container>
   );
 }
@@ -22,9 +54,11 @@ function Feed() {
 export default Feed;
 
 const Container = styled.div`
-  border: 1px solid #000;
+  border: 1px solid ${(props) => props.theme.borderColor};
+  border-radius: 0.4rem;
   width: 40rem;
-  height: 100vh;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
 `;
 
 const Header = styled.header`
@@ -49,9 +83,68 @@ const ProfileImg = styled.img`
 
 const NickName = styled.span`
   font-weight: bold;
+  margin-right: 0.5rem;
 `;
 
-const MoreOptions = styled(FontAwesomeIcon)`
+const Icon = styled(FontAwesomeIcon)`
   width: 1.5rem;
   height: 1.5rem;
+  margin-right: ${({ margin }) => (margin ? '1rem' : '0')};
+`;
+
+const PhotoSection = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Photo = styled.img`
+  width: 40rem;
+  max-height: 70rem;
+`;
+
+const IconContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+`;
+
+const BookMark = styled.div``;
+
+const ArticleInfo = styled.section`
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+`;
+
+const Likes = styled.span`
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+`;
+
+const ContentsContainer = styled.div``;
+const Contents = styled.span``;
+
+const CreateComment = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+  border-top: 1px solid ${(props) => props.theme.borderColor};
+`;
+
+const CommentInput = styled.input`
+  padding: 0.5rem 0;
+  width: 37rem;
+  height: 100%;
+`;
+
+const PostBtn = styled.button`
+  color: blue;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: #fff;
+  cursor: pointer;
 `;
