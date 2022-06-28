@@ -42,7 +42,7 @@ function LoginPage() {
     <Form>
       <Input
         id="email"
-        placeholder="Type your email"
+        placeholder="전화번호, 사용자 이름 또는 이메일"
         onChange={changeHandler}
         validation={validation.email}
         onBlur={checkInputValidation}
@@ -50,23 +50,42 @@ function LoginPage() {
       <Input
         type="password"
         id="password"
-        placeholder="Type your password"
+        placeholder="비밀번호"
         onChange={changeHandler}
         validation={validation.password}
         onBlur={checkInputValidation}
       />
-      <Button disabled={isDisabled}>Login</Button>
+      <Button disabled={isDisabled} validation={isDisabled}>
+        Login
+      </Button>
     </Form>
   );
 }
 
 export default LoginPage;
 
-const Form = styled.form``;
+const Form = styled.form`
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  width: 30rem;
+  margin: 0 auto;
+`;
 
 const Input = styled.input`
   border: 1px solid;
-  border-color: ${({ validation }) => (validation ? 'black' : 'red')};
+  border-color: ${({ validation }) => (validation ? 'gray' : 'red')};
+  margin-bottom: 0.5rem;
+  height: 2rem;
+  width: 20rem;
 `;
 
-const Button = styled.button``;
+const Button = styled.button`
+  width: 20rem;
+  height: 2rem;
+  background-color: ${({ validation }) =>
+    !validation ? 'rgb(58,149,239)' : 'rgb(187, 224, 252)'};
+  color: #fff;
+`;
