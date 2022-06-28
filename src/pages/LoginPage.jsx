@@ -45,6 +45,7 @@ function LoginPage() {
     const { email, password } = loginInfo;
     if (email === 'wanted@naver.com' && password === 'Wanted123!!') {
       localStorage.setItem('userInfo', JSON.stringify(loginInfo));
+      location.reload();
     }
   };
 
