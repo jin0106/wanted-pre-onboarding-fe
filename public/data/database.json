@@ -1,0 +1,23 @@
+{
+  "items": [
+    {
+      "writer": "wanted",
+      "image": "https://source.unsplash.com/random/600x500",
+      "content": "test1",
+      "likes": 123123
+    },
+    {
+      "writer": "discord",
+      "image": "https://source.unsplash.com/random/900x500",
+      "content": "test2",
+      "likes": 78912
+    },
+    {
+      "writer": "Hershey's",
+      "image": "https://source.unsplash.com/random/700x1080",
+      "content": "test3",
+      "likes": 8901241
+    }
+  ],
+  "user": { "id": "wanted@naver.com", "password": "Wanted123!" }
+}
