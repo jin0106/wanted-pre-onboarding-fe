@@ -9,6 +9,11 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Navbar() {
+  const handleLogoutBtn = () => {
+    localStorage.removeItem('userInfo');
+    location.reload();
+  };
+
   return (
     <Header>
       <MainContainer>
@@ -19,7 +24,7 @@ function Navbar() {
             <Icon icon={faHouse} />
             <Icon icon={faInbox} />
             <Icon icon={faHeart} />
-            <Icon icon={faArrowRightFromBracket} />
+            <Icon icon={faArrowRightFromBracket} onClick={handleLogoutBtn} />
           </IconContainer>
         </Container>
       </MainContainer>
@@ -32,7 +37,7 @@ export default Navbar;
 const Header = styled.nav`
   position: sticky;
   width: 100%;
-  height: 3rem;
+  height: 3.5rem;
   background-color: #fff;
   border-top: 1px solid rgb(219, 219, 219);
   border-bottom: 1px solid rgba(219, 219, 219);
@@ -49,7 +54,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80rem;
+  width: 60rem;
 `;
 
 const IconContainer = styled.div``;
