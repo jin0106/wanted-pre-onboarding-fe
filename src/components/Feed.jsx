@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +12,18 @@ import {
 import Comment from './Comment';
 
 function Feed() {
+  const [comment, setComment] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
+  const changeHandler = (e) => {
+    setComment(e.target.value);
+    e.target.value.trim().length > 0
+      ? setIsDisabled(false)
+      : setIsDisabled(true);
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+  };
   return (
     <Container>
       <Header>
@@ -42,10 +54,16 @@ function Feed() {
       {[{ writer: 'wjin', comment: 'dafsdf' }].map((value, index) => (
         <Comment props={value} key={index} />
       ))}
-      <CreateComment>
+      <CreateComment onSubmit={onSubmitHandler}>
         <Icon icon={faSmile} margin="true" />
-        <CommentInput />
-        <PostBtn>Post</PostBtn>
+        <CommentInput onChange={changeHandler} />
+        <PostBtn
+          disabled={isDisabled}
+          disable={isDisabled}
+          onClick={onSubmitHandler}
+        >
+          Post
+        </PostBtn>
       </CreateComment>
     </Container>
   );
@@ -127,7 +145,7 @@ const Likes = styled.span`
 const ContentsContainer = styled.div``;
 const Contents = styled.span``;
 
-const CreateComment = styled.div`
+const CreateComment = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -142,9 +160,10 @@ const CommentInput = styled.input`
 `;
 
 const PostBtn = styled.button`
-  color: blue;
+  color: ${({ disabled }) =>
+    disabled ? 'rgb(178, 223, 252);' : 'rgb(17,156,247)'};
   font-size: 1.1rem;
   font-weight: bold;
   background-color: #fff;
-  cursor: pointer;
+  cursor: ${({ disable }) => (disable ? 'default' : 'pointer')};
 `;
