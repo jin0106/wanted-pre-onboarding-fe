@@ -4,6 +4,7 @@ import {
   checkEmailValidation,
   checkPasswordValidation,
 } from '../utils/checkValidation';
+
 function LoginPage() {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
   const [validation, setValidation] = useState({
@@ -38,8 +39,17 @@ function LoginPage() {
       return true;
     return false;
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = loginInfo;
+    if (email === 'wanted@naver.com' && password === 'Wanted123!!') {
+      localStorage.setItem('userInfo', JSON.stringify(loginInfo));
+    }
+  };
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Input
         id="email"
         placeholder="전화번호, 사용자 이름 또는 이메일"
@@ -88,4 +98,5 @@ const Button = styled.button`
   background-color: ${({ validation }) =>
     !validation ? 'rgb(58,149,239)' : 'rgb(187, 224, 252)'};
   color: #fff;
+  cursor: pointer;
 `;
