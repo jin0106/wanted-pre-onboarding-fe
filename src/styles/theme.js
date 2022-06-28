@@ -6,6 +6,7 @@ const size = {
 };
 
 const theme = {
+  borderColor: 'rgb(239,239,239)',
   tabletS: `(max-width: ${size.tabletS})`,
   mobile: `(max-width: ${size.mobile})`,
   mobileS: `(max-width:${size.mobileS})`,
