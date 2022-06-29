@@ -9,17 +9,19 @@ beforeEach(() => {
 
 describe('Login Page Test', () => {
   it('has email input', () => {
-    const emailInput = screen.getByPlaceholderText('Type your email');
+    const emailInput = screen.getByPlaceholderText(
+      '전화번호, 사용자 이름 또는 이메일'
+    );
     expect(emailInput).toBeInTheDocument();
   });
 
   it('has password input', () => {
-    const passwordInput = screen.getByPlaceholderText('Type your password');
+    const passwordInput = screen.getByPlaceholderText('비밀번호');
     expect(passwordInput).toBeInTheDocument();
   });
 
   it('has password type for password input', () => {
-    const passwordInput = screen.getByPlaceholderText('Type your password');
+    const passwordInput = screen.getByPlaceholderText('비밀번호');
     expect(passwordInput.type).toBe('password');
   });
 
@@ -36,10 +38,12 @@ describe('Login Page Test', () => {
 
 describe('Interactions', () => {
   it('enables the button when both email and password inputs are filled', () => {
-    const emailInput = screen.getByPlaceholderText('Type your email');
-    const passwordInput = screen.getByPlaceholderText('Type your password');
-    userEvent.type(emailInput, 'wjinh');
-    userEvent.type(passwordInput, 'test123!');
+    const emailInput = screen.getByPlaceholderText(
+      '전화번호, 사용자 이름 또는 이메일'
+    );
+    const passwordInput = screen.getByPlaceholderText('비밀번호');
+    userEvent.type(emailInput, 'wanted@naver.com');
+    userEvent.type(passwordInput, 'Wanted1234!!');
     const button = screen.getByText('Login');
     expect(button).toBeEnabled();
   });
