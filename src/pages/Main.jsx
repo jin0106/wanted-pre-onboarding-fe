@@ -10,23 +10,26 @@ function Main() {
     const getData = async () => {
       const res = await fetch('./data/database.json');
       const info = await res.json();
-      setData(info.items);
       setIsLoading(false);
+      setData(info.items);
     };
     getData();
   }, []);
 
-  {
-    isLoading ? (
-      <div></div>
-    ) : (
-      <Container>
-        {data.map((item, idx) => (
-          <Feed key={idx} item={item} />
-        ))}
-      </Container>
+  const writeComment = (idx, name, content) => {
+    data.map((item) =>
+      item.index === idx ? item.comments.push({ name, content }) : null
     );
-  }
+  };
+  return isLoading ? (
+    <div></div>
+  ) : (
+    <Container>
+      {data.map((item, idx) => (
+        <Feed key={idx} item={item} writeComment={writeComment} />
+      ))}
+    </Container>
+  );
 }
 
 export default Main;
