@@ -41,33 +41,42 @@ function LoginPage() {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Input
-        id="email"
-        placeholder="전화번호, 사용자 이름 또는 이메일"
-        validation={validation.email}
-        ref={emailInput}
-        onChange={checkInput}
-      />
-      <Input
-        type="password"
-        id="password"
-        placeholder="비밀번호"
-        validation={validation.password}
-        ref={passwordInput}
-        onChange={checkInput}
-      />
-      <Button disabled={!validation.email || !validation.password}>
-        Login
-      </Button>
-    </Form>
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        <Input
+          id="email"
+          placeholder="전화번호, 사용자 이름 또는 이메일"
+          validation={validation.email}
+          ref={emailInput}
+          onChange={checkInput}
+        />
+        <Input
+          type="password"
+          id="password"
+          placeholder="비밀번호"
+          validation={validation.password}
+          ref={passwordInput}
+          onChange={checkInput}
+        />
+        <Button disabled={!validation.email || !validation.password}>
+          Login
+        </Button>
+      </Form>
+    </Container>
   );
 }
 
 export default LoginPage;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+`;
 const Form = styled.form`
-  border: 1px solid black;
+  border: 1px solid ${(props) => props.theme.borderColor};
+  border-radius: 0.4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,8 +87,11 @@ const Form = styled.form`
 
 const Input = styled.input`
   border: 1px solid;
-  border-color: ${({ validation }) =>
-    validation === null || validation ? 'gray' : 'red'};
+  border-color: ${(props) =>
+    props.validation === null || props.validation
+      ? props.theme.borderColor
+      : 'red'};
+  border-radius: 0.2rem;
   margin-bottom: 0.5rem;
   height: 2rem;
   width: 20rem;
