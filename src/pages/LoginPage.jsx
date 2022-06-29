@@ -43,6 +43,7 @@ function LoginPage() {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
+        <LogoImg src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1280px-Instagram_logo.svg.png" />
         <Input
           id="email"
           placeholder="전화번호, 사용자 이름 또는 이메일"
@@ -74,6 +75,12 @@ const Container = styled.div`
   justify-content: center;
   height: 100vh;
 `;
+
+const LogoImg = styled.img`
+  width: 8rem;
+  height: 4rem;
+`;
+
 const Form = styled.form`
   border: 1px solid ${(props) => props.theme.borderColor};
   border-radius: 0.4rem;
@@ -81,7 +88,7 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  width: 30rem;
+  width: 25rem;
   margin: 0 auto;
 `;
 
@@ -95,6 +102,7 @@ const Input = styled.input`
   margin-bottom: 0.5rem;
   height: 2rem;
   width: 20rem;
+  padding: 0.5rem;
 `;
 
 const Button = styled.button`
