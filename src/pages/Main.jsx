@@ -4,6 +4,17 @@ import Feed from '../components/Feed';
 
 function Main() {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await fetch('./data/database.json');
+      const info = await res.json();
+      setData(info.items);
+      setIsLoading(false);
+    };
+    getData();
+  }, []);
 
   {
     isLoading ? (
