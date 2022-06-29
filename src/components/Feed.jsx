@@ -36,9 +36,13 @@ function Feed({ item, writeComment }) {
 
   const postComment = (e) => {
     e.preventDefault();
-    writeComment(index, user, comment);
-    commentInput.current.value = '';
-    setComment('');
+    if (commentInput.current.value.trim().length > 0) {
+      writeComment(index, user, comment);
+      commentInput.current.value = '';
+      setComment('');
+      return;
+    }
+    alert('내용을 입력해주세요');
   };
 
   return isLoading ? (
@@ -53,7 +57,7 @@ function Feed({ item, writeComment }) {
         <Icon icon={faEllipsis} />
       </Header>
       <PhotoSection>
-        <Photo src={image} onLoad={() => setIsLoading(false)} />
+        <Photo src={image} />
         <IconContainer>
           <BookMark>
             <Icon icon={faHeart} margin="true" />
