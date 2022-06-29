@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import {
   checkEmailValidation,
@@ -6,50 +6,38 @@ import {
 } from '../utils/checkValidation';
 
 function LoginPage() {
-  const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
+  const emailInput = useRef();
+  const passwordInput = useRef();
+
   const [validation, setValidation] = useState({
-    email: true,
-    password: true,
+    email: null,
+    password: null,
   });
-  const [isDisabled, setIsDisabled] = useState(true);
 
-  const changeHandler = (e) => {
-    const { id, value } = e.target;
-    setLoginInfo({ ...loginInfo, [id]: value });
-  };
-
-  const checkInputValidation = (e) => {
-    const { id, value } = e.target;
+  const checkInput = (e) => {
+    const { id } = e.target;
     const isValid =
       id === 'email'
-        ? checkEmailValidation(value)
-        : checkPasswordValidation(value);
-
-    setValidation({ ...validation, [id]: isValid });
-    setIsDisabled(checkButton());
-  };
-
-  const checkButton = () => {
-    if (
-      !validation.email ||
-      !validation.password ||
-      loginInfo.email.length < 1 ||
-      loginInfo.password.length < 1
-    )
-      return true;
-    return false;
+        ? checkEmailValidation(emailInput.current.value)
+        : checkPasswordValidation(passwordInput.current.value);
+    setValidation({
+      ...validation,
+      [id]: isValid,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = loginInfo;
+    const email = emailInput.current.value;
+    const password = passwordInput.current.value;
     if (email === 'wanted@naver.com' && password === 'Wanted123!!') {
       localStorage.setItem(
         'userInfo',
         JSON.stringify({ email, password, name: 'test' })
       );
-      location.reload();
+      return location.reload();
     }
+    alert('유효하지 않은 정보입니다');
   };
 
   return (
@@ -57,19 +45,19 @@ function LoginPage() {
       <Input
         id="email"
         placeholder="전화번호, 사용자 이름 또는 이메일"
-        onChange={changeHandler}
         validation={validation.email}
-        onBlur={checkInputValidation}
+        ref={emailInput}
+        onChange={checkInput}
       />
       <Input
         type="password"
         id="password"
         placeholder="비밀번호"
-        onChange={changeHandler}
         validation={validation.password}
-        onBlur={checkInputValidation}
+        ref={passwordInput}
+        onChange={checkInput}
       />
-      <Button disabled={isDisabled} validation={isDisabled}>
+      <Button disabled={!validation.email || !validation.password}>
         Login
       </Button>
     </Form>
@@ -90,7 +78,8 @@ const Form = styled.form`
 
 const Input = styled.input`
   border: 1px solid;
-  border-color: ${({ validation }) => (validation ? 'gray' : 'red')};
+  border-color: ${({ validation }) =>
+    validation === null || validation ? 'gray' : 'red'};
   margin-bottom: 0.5rem;
   height: 2rem;
   width: 20rem;
@@ -99,8 +88,8 @@ const Input = styled.input`
 const Button = styled.button`
   width: 20rem;
   height: 2rem;
-  background-color: ${({ validation }) =>
-    !validation ? 'rgb(58,149,239)' : 'rgb(187, 224, 252)'};
+  background-color: ${({ disabled }) =>
+    !disabled ? 'rgb(58,149,239)' : 'rgb(187, 224, 252)'};
   color: #fff;
   cursor: pointer;
 `;
