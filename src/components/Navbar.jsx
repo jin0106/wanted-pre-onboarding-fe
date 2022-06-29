@@ -36,6 +36,7 @@ export default Navbar;
 
 const Header = styled.nav`
   position: sticky;
+  top: 0;
   width: 100%;
   height: 3.5rem;
   background-color: #fff;
