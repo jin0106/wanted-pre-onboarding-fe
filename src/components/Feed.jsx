@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
@@ -11,11 +11,13 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import Comment from './Comment';
 
-function Feed({ item }) {
+function Feed({ item, writeComment }) {
+  const commentInput = useRef();
   const [comment, setComment] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isDisabled, setIsDisabled] = useState(true);
-  const { writer, profileImage, image, content, likes, comments } = item;
+  const { writer, profileImage, image, content, likes, comments, index } = item;
+  const user = JSON.parse(localStorage.getItem('userInfo')).name;
 
   const changeHandler = (e) => {
     setComment(e.target.value);
@@ -32,8 +34,11 @@ function Feed({ item }) {
     };
   }, []);
 
-  const onSubmitHandler = (e) => {
+  const postComment = (e) => {
     e.preventDefault();
+    writeComment(index, user, comment);
+    commentInput.current.value = '';
+    setComment('');
   };
 
   return isLoading ? (
@@ -68,13 +73,13 @@ function Feed({ item }) {
       {comments.map((value, index) => (
         <Comment comment={value} key={index} />
       ))}
-      <CreateComment onSubmit={onSubmitHandler}>
+      <CreateComment onSubmit={postComment}>
         <Icon icon={faSmile} margin="true" />
-        <CommentInput onChange={changeHandler} />
+        <CommentInput onChange={changeHandler} ref={commentInput} />
         <PostBtn
           disabled={isDisabled}
           disable={isDisabled}
-          onClick={onSubmitHandler}
+          onClick={postComment}
         >
           Post
         </PostBtn>
