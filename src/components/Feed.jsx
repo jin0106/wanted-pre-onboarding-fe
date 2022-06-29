@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +13,10 @@ import Comment from './Comment';
 
 function Feed({ item }) {
   const [comment, setComment] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const [isDisabled, setIsDisabled] = useState(true);
+  const { writer, profileImage, image, content, likes, comments } = item;
+
   const changeHandler = (e) => {
     setComment(e.target.value);
     e.target.value.trim().length > 0
@@ -21,12 +24,21 @@ function Feed({ item }) {
       : setIsDisabled(true);
   };
 
+  useEffect(() => {
+    const img = new Image();
+    img.src = image;
+    img.onload = () => {
+      setIsLoading(false);
+    };
+  }, []);
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
   };
 
-  const { writer, profileImage, image, content, likes, comments } = item;
-  return (
+  return isLoading ? (
+    <div></div>
+  ) : (
     <Container>
       <Header>
         <UserInfo>
@@ -36,7 +48,7 @@ function Feed({ item }) {
         <Icon icon={faEllipsis} />
       </Header>
       <PhotoSection>
-        <Photo src={image} />
+        <Photo src={image} onLoad={() => setIsLoading(false)} />
         <IconContainer>
           <BookMark>
             <Icon icon={faHeart} margin="true" />
@@ -76,9 +88,12 @@ export default Feed;
 const Container = styled.div`
   border: 1px solid ${(props) => props.theme.borderColor};
   border-radius: 0.4rem;
-  width: 40rem;
+  width: 30rem;
   padding: 0 1rem;
   margin-bottom: 1rem;
+  @media ${(props) => props.theme.mobileXS} {
+    width: 100%;
+  }
 `;
 
 const Header = styled.header`
@@ -119,8 +134,11 @@ const PhotoSection = styled.article`
 `;
 
 const Photo = styled.img`
-  width: 40rem;
+  width: 30rem;
   max-height: 70rem;
+  @media ${(props) => props.theme.mobileXS} {
+    width: 100%;
+  }
 `;
 
 const IconContainer = styled.div`
