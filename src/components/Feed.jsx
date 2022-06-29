@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import {
   faBookmark,
@@ -10,6 +9,8 @@ import {
   faSmile,
 } from '@fortawesome/free-regular-svg-icons';
 import Comment from './Comment';
+import Icon from './Icon';
+import NickName from './NickName';
 
 function Feed({ item, writeComment }) {
   const commentInput = useRef();
@@ -123,17 +124,6 @@ const ProfileImg = styled.img`
   height: 2rem;
   border-radius: 50%;
   margin-right: 1rem;
-`;
-
-const NickName = styled.span`
-  font-weight: bold;
-  margin-right: 0.5rem;
-`;
-
-const Icon = styled(FontAwesomeIcon)`
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: ${({ margin }) => (margin ? '1rem' : '0')};
 `;
 
 const PhotoSection = styled.article`

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import NickName from './NickName';
 
 function Comment({ comment }) {
   return (
@@ -14,12 +15,6 @@ export default Comment;
 
 const Container = styled.div`
   display: flex;
-`;
-
-const NickName = styled.span`
-  font-weight: bold;
-  margin-right: 0.5rem;
-  cursor: pointer;
 `;
 
 const Contents = styled.span``;

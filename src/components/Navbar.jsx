@@ -6,8 +6,7 @@ import {
   faHeart,
   faArrowRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import Icon from './Icon';
 function Navbar() {
   const handleLogoutBtn = () => {
     localStorage.removeItem('userInfo');
@@ -58,13 +57,6 @@ const Container = styled.div`
 `;
 
 const IconContainer = styled.div``;
-
-const Icon = styled(FontAwesomeIcon)`
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-left: 1.3rem;
-  cursor: pointer;
-`;
 
 const LogoImg = styled.img`
   width: 5rem;
