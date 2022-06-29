@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import Comment from './Comment';
 
-function Feed() {
+function Feed({ item }) {
   const [comment, setComment] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const changeHandler = (e) => {
@@ -24,17 +24,19 @@ function Feed() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
   };
+
+  const { writer, profileImage, image, content, likes, comments } = item;
   return (
     <Container>
       <Header>
         <UserInfo>
-          <ProfileImg />
-          <NickName>dlawlrma</NickName>
+          <ProfileImg src={profileImage} />
+          <NickName>{writer}</NickName>
         </UserInfo>
         <Icon icon={faEllipsis} />
       </Header>
       <PhotoSection>
-        <Photo src="https://source.unsplash.com/random/600x500" />
+        <Photo src={image} />
         <IconContainer>
           <BookMark>
             <Icon icon={faHeart} margin="true" />
@@ -45,14 +47,14 @@ function Feed() {
         </IconContainer>
       </PhotoSection>
       <ArticleInfo>
-        <Likes>10000 likes</Likes>
+        <Likes>{likes} likes</Likes>
         <ContentsContainer>
-          <NickName>dlawlrma</NickName>
-          <Contents>asdfadfafasdfasasdfadsf</Contents>
+          <NickName>{writer}</NickName>
+          <Contents>{content}</Contents>
         </ContentsContainer>
       </ArticleInfo>
-      {[{ writer: 'wjin', comment: 'dafsdf' }].map((value, index) => (
-        <Comment props={value} key={index} />
+      {comments.map((value, index) => (
+        <Comment comment={value} key={index} />
       ))}
       <CreateComment onSubmit={onSubmitHandler}>
         <Icon icon={faSmile} margin="true" />
